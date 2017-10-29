@@ -1,1 +1,110 @@
 # EAGOBranchBound
+
+[![Build Status](https://travis-ci.org/mewilhel/EAGOBranchBound.jl.svg?branch=master)](https://travis-ci.org/mewilhel/EAGOBranchBound.jl)
+
+[![Coverage Status](https://coveralls.io/repos/mewilhel/EAGOBranchBound.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/mewilhel/EAGOBranchBound.jl?branch=master)
+
+[![codecov.io](http://codecov.io/github/mewilhel/EAGOBranchBound.jl/coverage.svg?branch=master)](http://codecov.io/github/mewilhel/EAGOBranchBound.jl?branch=master)
+
+# BranchBound
+A branch-and-bound library for Julia
+
+## Authors
+- [Matthew Wilhelm](httppsor.uconn.eduour-team), Department of Chemical and Biomolecular Engineering,  University of Connecticut (UCONN)
+
+## Table of Contents
+- [**Installation**](#installation)
+- [**Capabilities**](#capabilities)
+- [**Usage Instructions**](#usage)
+  - **Example 1** - Setup and Solve a Basic Problem
+  - **Example 2** - Adjust Tolerances
+  - **Example 3** - Select Alternative Search Routines
+  - **Example 4** - Adjust Information Printed
+
+## Installation
+To install the package, from within Julia do
+
+```julia
+julia> Pkg.clone("https://github.com/mewilhel/EAGOBranchBound.git")
+```
+
+## Capabilities
+This package is meant to provide a flexible framework for implementing branch-and-bound based optimization routines in Julia. All components of the branch-and-bound routine can be customized by the individual user: lower bounding problem, upper bounding problem, .
+## Usage
+### Example 1 - Setup and Solve a Basic Problem
+In the below example, we solve for minima of **f(x)=x<sub>1</sub>+x<sub>2</sub><sup>2</sup>** on the domain [-1,1] by [2,9]. Natural interval extensions are used to compute the upper and lower bounds. The natural interval extensions are provided by the Validated Numerics package.
+
+First, we create a BnB object which contains all the relevant problem info and a BnBObject object that contains all nodes and their associated values. We specify default conditions for the Branch and Bound problem. Default conditions are a best-first search, relative width bisection, normal verbosity, a maximum of 1E6 nodes, an absolute tolerance of 1E-6, and a relative tolerance of 1E-3.
+```julia
+using EAGOBranchBound
+using ValidatedNumerics
+b = IntervalBox(-1..1,2..9)
+a = EAGOBranchBound.BnB(b)
+C = EAGOBranchBound.BnBObject(b)
+EAGOBranchBound.set_to_default!(a)
+a.BnB_tol = 1E-4
+```
+Next, the lower and upper bounding problems are defined. These problems must return a tuple containing the upper/lower value, a point corresponding the upper/lower value, and the feasbility of the problem. We then set the lower/upper problem of the BnB object and solve the BnB & BnBObject pair.
+```julia
+function ex_LBP(X::IntervalBox,k,opt)
+  ex_LBP_int = @interval X[1]+X[2]^2
+  return ex_LBP_int.lo, mid.(X), true
+end
+function ex_UBP(X::IntervalBox,k,opt)
+  ex_UBP_int = @interval X[1]+X[2]^2
+  return ex_UBP_int.hi, mid.(X), true
+end
+
+a.Lower_Prob = ex_LBP
+a.Upper_Prob = ex_UBP
+
+outy = EAGOBranchBound.solve(a,C)
+```
+The solution is then returned in outy and C.box is the interval box containing the solution. The corresponding output displayed to the console is given below.
+
+![BnB_Output](https://github.com/mewilhel/Julia_BnB/blob/master/Documentation/src/BnB_Output.png)
+
+### Example 2 - Adjust Solver Tolerances
+The absolute tolerance can be adjusted as shown below
+```julia
+julia> a.BnB_tol = 1E-4
+```
+The relative tolerance can be changed in a similar manner
+```julia
+julia> a.BnB_rtol = 1E-3
+```
+### Example 3 - Select Alternative Search Routines
+In the above problem, the search routine could be set to a breadth-first or depth-first routine by using the set_Branch_Scheme command
+```julia
+julia> EAGOBranchBound.set_Branch_Scheme!(a,"breadth")
+julia> EAGOBranchBound.set_Branch_Scheme!(a,"depth")
+```
+### Example 4 - Adjust Information Printed
+In order to print, node information in addition to iteration information the verbosity of the BnB routine can be set to full as shown below
+```julia
+julia> EAGOBranchBound.set_Verbosity!(a,"Full")
+```
+Similiarly, if one wishes to suppress all command line outputs, the verbosity can be set to none.
+```julia
+julia> EAGOBranchBound.set_Verbosity!(a,"None")
+```
+
+## Branch-and-Bound Background
+The majority of deterministic global optimization techniques use a branch-and-bound framework (or the closely related branch-and-reduce framework). Branch-and-bound search algorithms operate by partitioning a compact parameter space into a series of non-overlapping spaces (termed nodes). Upper and lower bounds of the function on a node are estimated, then compared with a global upper and lower bound. Any node that is found with an lower bound below the global upper bound is discarded (fathomed).
+
+## Planned Work:
+- Run time and memory-usage optimization
+- Add Additional Bisection Schemes:
+    - Golden Ratio
+    - Branch on Optimal
+- Add Additional Branching Schemes:
+    - Iterative Deepening Breadth First Search
+- Add option to print console output to .txt file
+- Improve accuracy of timing short LBD/UBD problems
+
+## References
+
+## Acknowledgements
+
+## Related Packages
+- ValidatedNumerics.jl, a Julia library for validated interval calculations, including basic interval extensions, constraint programming, and interval contactors
