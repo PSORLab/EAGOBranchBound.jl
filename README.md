@@ -25,7 +25,7 @@ A branch-and-bound library for Julia
 To install the package, from within Julia do
 
 ```julia
-julia> Pkg.clone("https://github.com/mewilhel/EAGOBranchBound.git")
+julia> Pkg.add("EAGOBranchBound")
 ```
 
 ## Capabilities
