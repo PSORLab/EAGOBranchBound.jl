@@ -38,11 +38,11 @@ First, we create a BnB object which contains all the relevant problem info and a
 ```julia
 using EAGOBranchBound
 using ValidatedNumerics
-b = IntervalBox(-1..1,2..9)
-a = EAGOBranchBound.BnB(b)
-C = EAGOBranchBound.BnBObject(b)
-EAGOBranchBound.set_to_default!(a)
-a.BnB_tol = 1E-4
+b = [Interval(-1,1),Interval(1,9)]
+a = BnBModel(b)
+c = BnBSolver()
+EAGOBranchBound.set_to_default!(c)
+c.BnB_atol = 1E-4
 ```
 Next, the lower and upper bounding problems are defined. These problems must return a tuple containing the upper/lower value, a point corresponding the upper/lower value, and the feasbility of the problem. We then set the lower/upper problem of the BnB object and solve the BnB & BnBObject pair.
 ```julia
@@ -55,12 +55,12 @@ function ex_UBP(X::IntervalBox,k,opt)
   return ex_UBP_int.hi, mid.(X), true
 end
 
-a.Lower_Prob = ex_LBP
-a.Upper_Prob = ex_UBP
+c.Lower_Prob = ex_LBP
+c.Upper_Prob = ex_UBP
 
-outy = EAGOBranchBound.solve(a,C)
+outy = solve(c,a)
 ```
-The solution is then returned in outy and C.box is the interval box containing the solution. The corresponding output displayed to the console is given below.
+The solution is then returned in b.soln and b.UBDg is it's value. The corresponding output displayed to the console is given below.
 
 ![BnB_Output](https://github.com/mewilhel/Julia_BnB/blob/master/Documentation/src/BnB_Output.png)
 
@@ -91,16 +91,6 @@ julia> EAGOBranchBound.set_Verbosity!(a,"None")
 
 ## Branch-and-Bound Background
 The majority of deterministic global optimization techniques use a branch-and-bound framework (or the closely related branch-and-reduce framework). Branch-and-bound search algorithms operate by partitioning a compact parameter space into a series of non-overlapping spaces (termed nodes). Upper and lower bounds of the function on a node are estimated, then compared with a global upper and lower bound. Any node that is found with an lower bound below the global upper bound is discarded (fathomed).
-
-## Planned Work:
-- Run time and memory-usage optimization
-- Add Additional Bisection Schemes:
-    - Golden Ratio
-    - Branch on Optimal
-- Add Additional Branching Schemes:
-    - Iterative Deepening Breadth First Search
-- Add option to print console output to .txt file
-- Improve accuracy of timing short LBD/UBD problems
 
 ## References
 
