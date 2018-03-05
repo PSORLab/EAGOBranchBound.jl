@@ -1,4 +1,3 @@
 julia 0.6
-ValidatedNumerics 0.9.0
 IntervalArithmetic 0.9.1
 IntervalRootFinding 0.1.1
