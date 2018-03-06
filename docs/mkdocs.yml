@@ -1,0 +1,6 @@
+site_name:        EAGOBranchBound.jl
+repo_url:         https://github.com/MatthewStuber/EAGOBranchBound.jl
+site_description: An open-source branch & bound library for Julia
+site_author:      MatthewStuber
+docs_dir:         build
+theme:            readthedocs

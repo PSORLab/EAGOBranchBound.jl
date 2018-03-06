@@ -1,3 +1,8 @@
+"""
+    fathom!(y::BnBModel)
+
+Fathoms the stack by value dominance.
+"""
 function fathom!(y::BnBModel)
   loc = find(z->(z>y.UBDg),y.LBD)
   deleteat!(y.LBD,loc)

@@ -1,3 +1,8 @@
+"""
+    solveBnB!(x::BnBSolver,y::BnBModel)
+
+Solves the branch and bound problem with the input model and solver object.
+"""
 function solveBnB!(x::BnBSolver,y::BnBModel)
 
   # initializes counts

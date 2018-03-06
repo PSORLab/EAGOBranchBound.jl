@@ -1,3 +1,8 @@
+"""
+    set_Branch_Scheme!(x::BnBSolver,BM::String)
+
+Sets the search scheme to "best", "breadth", or "depth" first schemes.
+"""
 function set_Branch_Scheme!(x::BnBSolver,BM::String)
   if (BM == "best")
     x.Node_Select = NS_best
@@ -13,6 +18,13 @@ function set_Branch_Scheme!(x::BnBSolver,BM::String)
   end
 end
 
+"""
+    set_Bisect_Func!(x::BnBSolver,BF::String,nx::Int64)
+
+Sets the bisection function to BF = "relative midpoint" or
+BF = "absolute midpoint" and disregards the first nx components of the interval
+box storage.
+"""
 function set_Bisect_Func!(x::BnBSolver,BF::String,nx::Int64)
   if (nx<0)
     if (BF == "relative midpoint")
@@ -33,6 +45,11 @@ function set_Bisect_Func!(x::BnBSolver,BF::String,nx::Int64)
   end
 end
 
+"""
+    set_Verbosity!(x::BnBSolver,VB::String)
+
+Sets the verbosity (console output) to either "None", "Normal", or "Full".
+"""
 function set_Verbosity!(x::BnBSolver,VB::String)
   if (VB == "None"||VB == "Normal"||VB == "Full")
     x.Verbosity = VB
@@ -41,6 +58,11 @@ function set_Verbosity!(x::BnBSolver,VB::String)
   end
 end
 
+"""
+    set_to_default!(x::BnBSolver)
+
+Returns the B&B solver to the default settings.
+"""
 function set_to_default!(x::BnBSolver)
   x.Term_Check = Term_Check
   x.Branch_Sto = BM_depth_best!

@@ -2,15 +2,8 @@ __precompile__()
 
 module EAGOBranchBound
 
-#using EAGOSmoothMcCormickGrad
-#using EAGOSmoothMcCormick
-#try using SNOPT end
-#using MathProgBase
-#importall MathProgBase.SolverInterface
 using IntervalArithmetic: Interval, diam
 using IntervalRootFinding.bisect
-
-#import IntervalArithmetic: @interval
 
 export BnBSolver, BnBModel, set_Branch_Scheme!, set_Bisect_Func!,
        set_Verbosity!, set_to_default!, solveBnB!, getsolution, getobjval,

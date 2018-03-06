@@ -1,29 +1,31 @@
-#=
-Type: BnBModel
-Init_Box::Vector{Interval{Float64}}        # stores initial interval box used
-box::Vector{Vector{Interval{Float64}}}     # interval box storage stack
-Init_Integer::Vector{Vector{Int64}}        # initial integer range
-integers::Vector{Vector{Vector{Int64}}}    # integer range storage stack
-LBD::Vector{Float64}                       # lower bounds associated with each stack item
-UBD::Vector{Float64}                       # Upper bounds associated with each stack item
-id::Vector{Int64}                          # Node ID for each stack item
-pos::Vector{Int64}                         # Position in BnB Tree for each stack item
-LBDg::Float64                              # Global Lower Bound
-UBDg::Float64                              # Global Upper Bound
-LBDg_hist::Vector{Float64}                 # Value history LBD problem
-UBDg_hist::Vector{Float64}                 # Value history UBD problem
-LBDgtime::Vector{Float64}                  # Run time history LBD problem
-UBDgtime::Vector{Float64}                  # Run time history UBD problem
-max_id::Int64                              # Max node used
-pstar::Vector{Interval{Float64}}           # IntervalBox with solution
-soln::Vector{Float64}                      # Storage for solution
-soln_val::Float64                          # Solution value found
-first_fnd::Bool                            # Has a solution been found
-feas_fnd::Bool                             # Has a feasible point been found
-first_num::Int64                           # Iteration at which first solution found
-lbcnt::Int64                               # number of lower bounding problems solved
-ubcnt::Int64                               # number of upper bounding problems solved
-=#
+"""
+    BnBModel
+
+Stores attributes of stack used to solve BnB problem. Has the following fields:
+* Init_Box::Vector{Interval{Float64}}        # stores initial interval box used
+* box::Vector{Vector{Interval{Float64}}}     # interval box storage stack
+* Init_Integer::Vector{Vector{Int64}}        # initial integer range
+* integers::Vector{Vector{Vector{Int64}}}    # integer range storage stack
+* LBD::Vector{Float64}                       # lower bounds associated with each stack item
+* UBD::Vector{Float64}                       # Upper bounds associated with each stack item
+* id::Vector{Int64}                          # Node ID for each stack item
+* pos::Vector{Int64}                         # Position in BnB Tree for each stack item
+* LBDg::Float64                              # Global Lower Bound
+* UBDg::Float64                              # Global Upper Bound
+* LBDg_hist::Vector{Float64}                 # Value history LBD problem
+* UBDg_hist::Vector{Float64}                 # Value history UBD problem
+* LBDgtime::Vector{Float64}                  # Run time history LBD problem
+* UBDgtime::Vector{Float64}                  # Run time history UBD problem
+* max_id::Int64                              # Max node used
+* pstar::Vector{Interval{Float64}}           # IntervalBox with solution
+* soln::Vector{Float64}                      # Storage for solution
+* soln_val::Float64                          # Solution value found
+* first_fnd::Bool                            # Has a solution been found
+* feas_fnd::Bool                             # Has a feasible point been found
+* first_num::Int64                           # Iteration at which first solution found
+* lbcnt::Int64                               # number of lower bounding problems solved
+* ubcnt::Int64                               # number of upper bounding problems solved
+"""
 type BnBModel
   Init_Box::Vector{Interval{Float64}}
   box::Vector{Vector{Interval{Float64}}} # interval box stack
@@ -49,7 +51,12 @@ type BnBModel
   lbcnt::Int64
   ubcnt::Int64
 end
-# initializes the BnB Storage Object from an initial intervalbox
+
+"""
+    BnBModel(X::Vector{Interval{Float64}})
+
+Initializes a BnBModel with Init_Box = X and box = [X].
+"""
 BnBModel(X::Vector{Interval{Float64}}) = BnBModel(deepcopy(X),
                                                               [deepcopy(X)],
                                                               [[1]],

@@ -1,3 +1,12 @@
+"""
+    BM_breadth!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
+                X1::Vector{Interval{Float64}},X2::Vector{Interval{Float64}},
+                pos::Int64)
+
+Stores two interval boxes 'X1,X2' to the bottom of the stack along with their
+respective lower, 'tL' and upper bounds, 'tU' and their position number in the
+BnB tree. Also, assigns node numbers.
+"""
 function BM_breadth!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
                              X1::Vector{Interval{Float64}},
                              X2::Vector{Interval{Float64}},pos::Int64)
@@ -9,6 +18,15 @@ function BM_breadth!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
   B.max_id += 2
 end
 
+"""
+    BM_depth_best!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
+                X1::Vector{Interval{Float64}},X2::Vector{Interval{Float64}},
+                pos::Int64)
+
+Stores two interval boxes 'X1,X2' to the top of the stack along with their
+respective lower, 'tL' and upper bounds, 'tU' and their position number in the
+BnB tree. Also, assigns node numbers.
+"""
 function BM_depth_best!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
                              X1::Vector{Interval{Float64}},
                              X2::Vector{Interval{Float64}},pos::Int64)

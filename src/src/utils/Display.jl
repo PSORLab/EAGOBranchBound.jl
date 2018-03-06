@@ -1,3 +1,9 @@
+"""
+    print_sol!(x::BnBSolver,y::BnBModel,ubdcnt::Int64,lbdcnt::Int64,ubdtime::Float64,lbdtime::Float64)
+
+Prints solution information for the B&B problem. Displays first node found, solution value,
+solution, and time spent solving subproblems.
+"""
 function print_sol!(x::BnBSolver,y::BnBModel,
                            ubdcnt::Int64,lbdcnt::Int64,
                            ubdtime::Float64,lbdtime::Float64)
@@ -17,6 +23,11 @@ function print_sol!(x::BnBSolver,y::BnBModel,
   end
 end
 
+"""
+    print_node!(x::BnBSolver,id::Int64,lbd::Float64,box::Vector{Interval{Float64}})
+
+Prints node information for the B&B problem. Node id, bound, and interval box.
+"""
 function print_node!(x::BnBSolver,id::Int64,lbd::Float64,
                             box::Vector{Interval{Float64}})
   if (x.Verbosity == "Full")
@@ -24,6 +35,13 @@ function print_node!(x::BnBSolver,id::Int64,lbd::Float64,
   end
 end
 
+"""
+    print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,nid::Int64,lbdp::Float64,lbd::Float64,ubd::Float64,feasL::Bool,feasU::Bool)
+
+Prints the iteration information if the Verbosity is set to "Normal" or "Full".
+The header is displayed every hdr_intv, the iteration info is displayed every
+itr_intv
+"""
 function print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,
                            nid::Int64,lbdp::Float64,lbd::Float64,ubd::Float64,feasL::Bool,feasU::Bool)
   if ((B.Verbosity == "Full")||(B.Verbosity == "Normal"))
@@ -35,7 +53,7 @@ function print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,
     sbool1 = feasL ? "true" : "false"
     sbool2 = feasU ? "true" : "false"
     if ((mod(k_int,B.itr_intv)==0))
-      ptr_arr_temp = [k_int nid lbdp lbd ubd k_nod (ubd-lbd) (lbd/ubd) sbool1 sbool2]
+      ptr_arr_temp = [k_int nid lbdp lbd ubd k_nod (ubd-lbd) (ubd-lbd)/abs(lbd) sbool1 sbool2]
       ptr_arr1 = join([@sprintf("%6u",x) for x in ptr_arr_temp[1:2]], ",   ")
       ptr_arr2 = join([@sprintf("%3.7f",x) for x in ptr_arr_temp[3:5]], ",     ")
       ptr_arr3 = join([@sprintf("%6u",x) for x in ptr_arr_temp[6:6]], ",")
@@ -46,6 +64,11 @@ function print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,
   end
 end
 
+"""
+    getsolution(x::BnBModel)
+
+Returns the solution stored in the BnBModel.
+"""
 function print_results!(B::BnBSolver,sol::Float64,pnt,feas::Bool,lbd_bool::Bool)
   if (B.Verbosity == "Full")
     if (lbd_bool)

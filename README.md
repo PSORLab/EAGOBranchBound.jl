@@ -34,7 +34,7 @@ This package is meant to provide a flexible framework for implementing branch-an
 ### Example 1 - Setup and Solve a Basic Problem
 In the below example, we solve for minima of **f(x)=x<sub>1</sub>+x<sub>2</sub><sup>2</sup>** on the domain [-1,1] by [2,9]. Natural interval extensions are used to compute the upper and lower bounds. The natural interval extensions are provided by the Validated Numerics package.
 
-First, we create a BnB object which contains all the relevant problem info and a BnBObject object that contains all nodes and their associated values. We specify default conditions for the Branch and Bound problem. Default conditions are a best-first search, relative width bisection, normal verbosity, a maximum of 1E6 nodes, an absolute tolerance of 1E-6, and a relative tolerance of 1E-3.
+First, we create a BnBModel object which contains all the relevant problem info and a BnBSolver object that contains all nodes and their associated values. We specify default conditions for the Branch and Bound problem. Default conditions are a best-first search, relative width bisection, normal verbosity, a maximum of 1E6 nodes, an absolute tolerance of 1E-6, and a relative tolerance of 1E-3.
 ```julia
 using EAGOBranchBound
 using ValidatedNumerics
@@ -44,7 +44,7 @@ c = BnBSolver()
 EAGOBranchBound.set_to_default!(c)
 c.BnB_atol = 1E-4
 ```
-Next, the lower and upper bounding problems are defined. These problems must return a tuple containing the upper/lower value, a point corresponding the upper/lower value, and the feasbility of the problem. We then set the lower/upper problem of the BnB object and solve the BnB & BnBObject pair.
+Next, the lower and upper bounding problems are defined. These problems must return a tuple containing the upper/lower value, a point corresponding the upper/lower value, and the feasibility of the problem. We then set the lower/upper problem of the BnBModel object and solve the BnBModel & BnBSolver pair.
 ```julia
 function ex_LBP(X::IntervalBox,k,opt)
   ex_LBP_int = @interval X[1]+X[2]^2
