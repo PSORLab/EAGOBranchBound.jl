@@ -58,7 +58,7 @@ end
 c.Lower_Prob = ex_LBP
 c.Upper_Prob = ex_UBP
 
-outy = solve(c,a)
+outy = solveBnB!(c,a)
 ```
 The solution is then returned in b.soln and b.UBDg is it's value. The corresponding output displayed to the console is given below.
 

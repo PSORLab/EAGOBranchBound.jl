@@ -13,16 +13,10 @@ More text
 Pages = [
     "userdocs/page1.md",
     "userdocs/page2.md",
-    "userdocs/page3.md"
-    ]
-Depth = 2
-```
-
-## Tutorial
-```@contents
-Pages = [
-    "tutorials/page1.md",
-    "tutorials/page2.md"
+    "userdocs/page3.md",
+    "userdocs/page4.md",
+    "userdocs/page5.md",
+    "userdocs/page6.md"
     ]
 Depth = 2
 ```

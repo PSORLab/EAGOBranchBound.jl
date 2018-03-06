@@ -1,5 +1,8 @@
+#!/usr/bin/env julia
+
 using EAGOBranchBound
-using Base.Test
 
 # write your own tests here
-@test 1 == 2
+println("Testing 1D Interval Optimization...")
+t = @elapsed include("D1_Interval_Test.jl")
+println("done (took $t seconds).")

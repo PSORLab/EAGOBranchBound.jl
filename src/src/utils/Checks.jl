@@ -15,10 +15,10 @@ function Term_Check(x::BnBSolver,y::BnBModel,k_int::Int64)
   t1 = length(y.LBD)>0
   t2 = (x.iter_lim ? k_int<x.max_iter : true)
   t3 = (length(y.LBD)<x.max_nodes)
-  t4 = (y.UBDg-y.LBDg)>x.BnB_atol
-  t5 = (y.UBDg-y.LBDg) <= abs(y.LBDg)*x.BnB_rtol)
+  t4 = (y.UBDg-y.LBDg) > x.BnB_atol
+  t5 = (y.UBDg-y.LBDg) > abs(y.LBDg)*x.BnB_rtol || ~(y.LBDg > -Inf)
   t6 = x.target_upper <= y.UBDg
-  if t1 & t2 & t3 & t4 & t5
+  if t1 & t2 & t3 & t4 & t5 & t6
     return true
   else
     if (x.Verbosity=="Normal"||x.Verbosity=="Full")
