@@ -46,13 +46,13 @@ c.BnB_atol = 1E-4
 ```
 Next, the lower and upper bounding problems are defined. These problems must return a tuple containing the upper/lower value, a point corresponding the upper/lower value, and the feasibility of the problem. We then set the lower/upper problem of the BnBModel object and solve the BnBModel & BnBSolver pair.
 ```julia
-function ex_LBP(X::IntervalBox,k,opt)
+function ex_LBP(X,k,pos,opt,temp)
   ex_LBP_int = @interval X[1]+X[2]^2
-  return ex_LBP_int.lo, mid.(X), true
+  return ex_LBP_int.lo, mid.(X), true, X,[]
 end
-function ex_UBP(X::IntervalBox,k,opt)
+function ex_UBP(X,k,pos,opt,temp)
   ex_UBP_int = @interval X[1]+X[2]^2
-  return ex_UBP_int.hi, mid.(X), true
+  return ex_UBP_int.hi, mid.(X), true, X,[]
 end
 
 c.Lower_Prob = ex_LBP
@@ -98,3 +98,4 @@ The majority of deterministic global optimization techniques use a branch-and-bo
 
 ## Related Packages
 - ValidatedNumerics.jl, a Julia library for validated interval calculations, including basic interval extensions, constraint programming, and interval contactors
+- IntervalOptimisation.jl, implements a branch-and-bound type global optimization routine using validated interval arithmetic
