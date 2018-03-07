@@ -1,9 +1,9 @@
 """
     NS_best(B::BnBModel)
 
-Selects node with the lowest upper lower bound. Returns (IntvBox,LBD,UBD,id,pos)
-where Intv is the intervalbox, LBD is the lower bound of the node, UBD is the
-upper bound of the node, id is the id number of the node, and pos is the position
+Selects node with the lowest upper lower bound. Returns `(IntvBox,LBD,UBD,id,pos)`
+where `Intv` is the interval box, `LBD` is the lower bound of the node, `UBD` is the
+upper bound of the node, `id` is the id number of the node, and `pos` is the position
 of the node in the BnB tree.
 """
 function NS_best(B::BnBModel)
@@ -14,9 +14,9 @@ end
 """
     NS_depth_breadth(B::BnBModel)
 
-Selects node on the top of the stack. Returns (IntvBox,LBD,UBD,id,pos)
-where Intv is the intervalbox, LBD is the lower bound of the node, UBD is the
-upper bound of the node, id is the id number of the node, and pos is the position
+Selects node on the top of the stack. Returns `(IntvBox,LBD,UBD,id,pos)`
+where `Intv` is the intervalbox, `LBD` is the lower bound of the node, `UBD` is the
+upper bound of the node, `id` is the id number of the node, and `pos` is the position
 of the node in the BnB tree.
 """
 function NS_depth_breadth(B::BnBModel)

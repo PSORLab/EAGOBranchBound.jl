@@ -65,9 +65,9 @@ function print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,
 end
 
 """
-    getsolution(x::BnBModel)
+    print_results!(B::BnBSolver,sol::Float64,pnt,feas::Bool,lbd_bool::Bool)
 
-Returns the solution stored in the BnBModel.
+Prints the results of a single bounding problem.
 """
 function print_results!(B::BnBSolver,sol::Float64,pnt,feas::Bool,lbd_bool::Bool)
   if (B.Verbosity == "Full")

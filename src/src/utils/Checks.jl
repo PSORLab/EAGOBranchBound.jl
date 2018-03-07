@@ -3,12 +3,12 @@
 
 Checks if algorithm continues for the branch and bound problem. Checks that:
 * Nodes are remaining on the stack.
-* The iteration limit (x.max_iter) is not exceeded if iteration limit
-flag (x.iter_lim) is true.
-* Maximum nodes (x.max_nodes) on stack are not exceeded.
-* Absolute global tolerance (x.BnB_atol) is not reached.
-* Relative global tolerance (x.BnB_rtol) is not reached.
-* Target upper bound (x.target_upper) is not reached.
+* The iteration limit (`x.max_iter`) is not exceeded if iteration limit
+flag (`x.iter_lim`) is true.
+* Maximum nodes (`x.max_nodes`) on stack are not exceeded.
+* Absolute global tolerance (`x.BnB_atol`) is not reached.
+* Relative global tolerance (`x.BnB_rtol`) is not reached.
+* Target upper bound (`x.target_upper`) is not reached.
 Outputs a description of termination check if it returns false.
 """
 function Term_Check(x::BnBSolver,y::BnBModel,k_int::Int64)
@@ -45,10 +45,22 @@ end
 
 Checks if convergence tolerance is reach for the branch and bound problem.
 Checks that:
-* Absolute global tolerance (x.BnB_atol) is reached.
-* Relative global tolerance (x.BnB_rtol) is reached.
+* Absolute global tolerance (`x.BnB_atol`) is reached.
+* Relative global tolerance (`x.BnB_rtol`) is reached.
 Outputs a description of termination check if it returns false.
 """
 function Conv_Check(x::BnBSolver,ubd::Float64,lbd::Float64)
   return (((ubd-lbd) <= x.BnB_atol) || ((ubd-lbd) <= abs(lbd)*x.BnB_rtol))
+end
+
+"""
+    Repeat_Node_Default(x::BnBSolver,y::BnBModel,Xin::Vector{Interval{Float64}},
+                                 Xout::Vector{Interval{Float64}})
+
+Default check for repeating a node. Always returns false.
+"""
+function Repeat_Node_Default(x::BnBSolver,y::BnBModel,
+                             Xin::Vector{Interval{Float64}},
+                             Xout::Vector{Interval{Float64}})
+  return false
 end

@@ -10,7 +10,9 @@ More text
 
 ```@docs
 EAGOBranchBound.BnBModel
+EAGOBranchBound.BnBModel(X::Vector{Interval{Float64}})
 EAGOBranchBound.BnBSolver
+EAGOBranchBound.BnBSolver()
 ```
 
 ```@docs
@@ -27,8 +29,10 @@ EAGOBranchBound.Bisect_Rel_Imp
 ```@docs
 EAGOBranchBound.BM_breadth!
 EAGOBranchBound.BM_depth_best!
+EAGOBranchBound.BM_Single!
 EAGOBranchBound.NS_best
 EAGOBranchBound.NS_depth_breadth
+EAGOBranchBound.fathom!
 ```
 
 ```@docs
@@ -45,6 +49,18 @@ EAGOBranchBound.set_Branch_Scheme!
 EAGOBranchBound.set_Bisect_Func!
 EAGOBranchBound.set_Verbosity!
 EAGOBranchBound.set_to_default!
+```
+
+```@docs
+EAGOBranchBound.Term_Check
+EAGOBranchBound.Conv_Check
+EAGOBranchBound.Repeat_Node_Default
+```
+
+```@docs
+EAGOBranchBound.print_sol!
+EAGOBranchBound.print_node!
+EAGOBranchBound.print_int!
 ```
 
 
