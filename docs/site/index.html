@@ -115,7 +115,7 @@
 
 <p>Stores attributes of stack used to solve BnB problem. Has the following fields:</p>
 <ul>
-<li>Init_Box::Vector{Interval{Float64}}        # stores initial interval box used</li>
+<li>"Init_Box::Vector{Interval{Float64}}": stores initial interval box used</li>
 <li>box::Vector{Vector{Interval{Float64}}}     # interval box storage stack</li>
 <li>Init_Integer::Vector{Vector{Int64}}        # initial integer range</li>
 <li>integers::Vector{Vector{Vector{Int64}}}    # integer range storage stack</li>
@@ -139,17 +139,176 @@
 <li>lbcnt::Int64                               # number of lower bounding problems solved</li>
 <li>ubcnt::Int64                               # number of upper bounding problems solved</li>
 </ul>
-<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/6480604bd43ee4ad9a484e72c439b357f942cf6a/src\src\types\BnBModel.jl#L1-L28' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\types\BnBModel.jl#L1-L28' class='documenter-source'>source</a><br></p>
 <p><a id='EAGOBranchBound.BnBSolver' href='#EAGOBranchBound.BnBSolver'>#</a>
 <strong><code>EAGOBranchBound.BnBSolver</code></strong> &mdash; <em>Type</em>.</p>
 <pre class="codehilite"><code>BnBSolver</code></pre>
 
 
 <p>Stores solver specific functions used to solve BnB problem. Has the following fields: Lower_Prob::Any        # Stores lower problem function Upper_Prob::Any        # Stores upper problem function Term_Check::Any        # Stores termination check function Branch_Sto::Any        # Stores branching function Node_Select::Any       # Stores node selection function Bisect_Func::Any       # Stores branching function Verbosity::String      # Stores output selection max_iter::Number       # max number of iterations iter_lim::Bool         # determines if iteration limit is checked max_nodes::Int64       # max number of nodes to store in memory BnB_atol::Float64      # absolute tolerance for BnB BnB_rtol::Float64      # relative tolerance for BnB itr_intv::Int64        # number of iterations to skip between printing iteration summary hdr_intv::Int64        # number of iterations to skip between printing header converged::Any         # convergence criterion BnB_digits::Int64      # digits displayed before decimal hist_return::Bool      # returns LBD, UBD array and time vector opt::Any               # optional storage array exhaust::Bool          # exhaustive search: find all solns or find first target_upper::Float64</p>
-<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/6480604bd43ee4ad9a484e72c439b357f942cf6a/src\src\types\BnBSolver.jl#L1-L25' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\types\BnBSolver.jl#L1-L25' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.solveBnB!' href='#EAGOBranchBound.solveBnB!'>#</a>
+<strong><code>EAGOBranchBound.solveBnB!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>solveBnB!(x::BnBSolver,y::BnBModel)</code></pre>
+
+
+<p>Solves the branch and bound problem with the input model and solver object.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\solve.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.Bisect_Abs' href='#EAGOBranchBound.Bisect_Abs'>#</a>
+<strong><code>EAGOBranchBound.Bisect_Abs</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>Bisect_Abs(S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}})</code></pre>
+
+
+<p>Returns two interval boxes 'X1,X2' created by bisecting 'N' in the highest width dimension.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Bisect_Method.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.Bisect_Abs_Imp' href='#EAGOBranchBound.Bisect_Abs_Imp'>#</a>
+<strong><code>EAGOBranchBound.Bisect_Abs_Imp</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>Bisect_Abs_Imp(S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}})</code></pre>
+
+
+<p>Returns two interval boxes 'X1,X2' created by bisecting 'N' in the highest width dimension greater than 'nx'.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Bisect_Method.jl#L31-L36' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.Bisect_Rel' href='#EAGOBranchBound.Bisect_Rel'>#</a>
+<strong><code>EAGOBranchBound.Bisect_Rel</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>Bisect_Rel(S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}})</code></pre>
+
+
+<p>Returns two interval boxes 'X1,X2' created by bisecting 'N' in the highest width dimension after scaling by initial box size.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Bisect_Method.jl#L16-L20' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.Bisect_Rel_Imp' href='#EAGOBranchBound.Bisect_Rel_Imp'>#</a>
+<strong><code>EAGOBranchBound.Bisect_Rel_Imp</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>Bisect_Rel_Imp(S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}})</code></pre>
+
+
+<p>Returns two interval boxes 'X1,X2' created by bisecting 'N' in the highest width dimension greater than 'nx' after scaling by initial box size.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Bisect_Method.jl#L47-L52' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.BM_breadth!' href='#EAGOBranchBound.BM_breadth!'>#</a>
+<strong><code>EAGOBranchBound.BM_breadth!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>BM_breadth!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
+            X1::Vector{Interval{Float64}},X2::Vector{Interval{Float64}},
+            pos::Int64)</code></pre>
+
+
+<p>Stores two interval boxes 'X1,X2' to the bottom of the stack along with their respective lower, 'tL' and upper bounds, 'tU' and their position number in the BnB tree. Also, assigns node numbers.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Branch_Method.jl#L1-L9' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.BM_depth_best!' href='#EAGOBranchBound.BM_depth_best!'>#</a>
+<strong><code>EAGOBranchBound.BM_depth_best!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>BM_depth_best!(S::BnBSolver,B::BnBModel,tL::Float64,tU::Float64,
+            X1::Vector{Interval{Float64}},X2::Vector{Interval{Float64}},
+            pos::Int64)</code></pre>
+
+
+<p>Stores two interval boxes 'X1,X2' to the top of the stack along with their respective lower, 'tL' and upper bounds, 'tU' and their position number in the BnB tree. Also, assigns node numbers.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Branch_Method.jl#L21-L29' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.NS_best' href='#EAGOBranchBound.NS_best'>#</a>
+<strong><code>EAGOBranchBound.NS_best</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>NS_best(B::BnBModel)</code></pre>
+
+
+<p>Selects node with the lowest upper lower bound. Returns (IntvBox,LBD,UBD,id,pos) where Intv is the intervalbox, LBD is the lower bound of the node, UBD is the upper bound of the node, id is the id number of the node, and pos is the position of the node in the BnB tree.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Node_Select.jl#L1-L8' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.NS_depth_breadth' href='#EAGOBranchBound.NS_depth_breadth'>#</a>
+<strong><code>EAGOBranchBound.NS_depth_breadth</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>NS_depth_breadth(B::BnBModel)</code></pre>
+
+
+<p>Selects node on the top of the stack. Returns (IntvBox,LBD,UBD,id,pos) where Intv is the intervalbox, LBD is the lower bound of the node, UBD is the upper bound of the node, id is the id number of the node, and pos is the position of the node in the BnB tree.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\schemes\Node_Select.jl#L14-L21' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.getsolution' href='#EAGOBranchBound.getsolution'>#</a>
+<strong><code>EAGOBranchBound.getsolution</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>getsolution(x::BnBModel)</code></pre>
+
+
+<p>Returns the solution stored in the BnBModel.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.getobjval' href='#EAGOBranchBound.getobjval'>#</a>
+<strong><code>EAGOBranchBound.getobjval</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>getobjval(x::BnBModel)</code></pre>
+
+
+<p>Returns the objective value stored in BnBModel (global upper bound).</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L8-L12' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.getobjbound' href='#EAGOBranchBound.getobjbound'>#</a>
+<strong><code>EAGOBranchBound.getobjbound</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>getobjbound(x::BnBModel)</code></pre>
+
+
+<p>Returns the objective value stored in BnBModel (global upper bound).</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L15-L19' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.getfeasibility' href='#EAGOBranchBound.getfeasibility'>#</a>
+<strong><code>EAGOBranchBound.getfeasibility</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>getfeasibility(x::BnBModel)</code></pre>
+
+
+<p>Returns feasibility of problem (feasible point found?).</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L22-L26' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.LBDtime' href='#EAGOBranchBound.LBDtime'>#</a>
+<strong><code>EAGOBranchBound.LBDtime</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>LBDtime(x::BnBModel)</code></pre>
+
+
+<p>Returns time spent solving lower bounding problem.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L29-L33' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.UBDtime' href='#EAGOBranchBound.UBDtime'>#</a>
+<strong><code>EAGOBranchBound.UBDtime</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>UBDtime(x::BnBModel)</code></pre>
+
+
+<p>Returns time spent solving upper bounding problem.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Access.jl#L36-L40' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.set_Branch_Scheme!' href='#EAGOBranchBound.set_Branch_Scheme!'>#</a>
+<strong><code>EAGOBranchBound.set_Branch_Scheme!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>set_Branch_Scheme!(x::BnBSolver,BM::String)</code></pre>
+
+
+<p>Sets the search scheme to "best", "breadth", or "depth" first schemes.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Set_Options.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.set_Bisect_Func!' href='#EAGOBranchBound.set_Bisect_Func!'>#</a>
+<strong><code>EAGOBranchBound.set_Bisect_Func!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>set_Bisect_Func!(x::BnBSolver,BF::String,nx::Int64)</code></pre>
+
+
+<p>Sets the bisection function to BF = "relative midpoint" or BF = "absolute midpoint" and disregards the first nx components of the interval box storage.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Set_Options.jl#L21-L27' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.set_Verbosity!' href='#EAGOBranchBound.set_Verbosity!'>#</a>
+<strong><code>EAGOBranchBound.set_Verbosity!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>set_Verbosity!(x::BnBSolver,VB::String)</code></pre>
+
+
+<p>Sets the verbosity (console output) to either "None", "Normal", or "Full".</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Set_Options.jl#L48-L52' class='documenter-source'>source</a><br></p>
+<p><a id='EAGOBranchBound.set_to_default!' href='#EAGOBranchBound.set_to_default!'>#</a>
+<strong><code>EAGOBranchBound.set_to_default!</code></strong> &mdash; <em>Function</em>.</p>
+<pre class="codehilite"><code>set_to_default!(x::BnBSolver)</code></pre>
+
+
+<p>Returns the B&amp;B solver to the default settings.</p>
+<p><a target='_blank' href='https://github.com/MatthewStuber/EAGOBranchBound/blob/993c29734b0371e9d3936d1c01f8e2fe9894b88b/src\src\utils\Set_Options.jl#L61-L65' class='documenter-source'>source</a><br></p>
+<ul>
+<li><a href=".#EAGOBranchBound.BnBModel"><code>EAGOBranchBound.BnBModel</code></a></li>
+<li><a href=".#EAGOBranchBound.BnBSolver"><code>EAGOBranchBound.BnBSolver</code></a></li>
+<li><a href=".#EAGOBranchBound.BM_breadth!"><code>EAGOBranchBound.BM_breadth!</code></a></li>
+<li><a href=".#EAGOBranchBound.BM_depth_best!"><code>EAGOBranchBound.BM_depth_best!</code></a></li>
+<li><a href=".#EAGOBranchBound.Bisect_Abs"><code>EAGOBranchBound.Bisect_Abs</code></a></li>
+<li><a href=".#EAGOBranchBound.Bisect_Abs_Imp"><code>EAGOBranchBound.Bisect_Abs_Imp</code></a></li>
+<li><a href=".#EAGOBranchBound.Bisect_Rel"><code>EAGOBranchBound.Bisect_Rel</code></a></li>
+<li><a href=".#EAGOBranchBound.Bisect_Rel_Imp"><code>EAGOBranchBound.Bisect_Rel_Imp</code></a></li>
+<li><a href=".#EAGOBranchBound.LBDtime"><code>EAGOBranchBound.LBDtime</code></a></li>
+<li><a href=".#EAGOBranchBound.NS_best"><code>EAGOBranchBound.NS_best</code></a></li>
+<li><a href=".#EAGOBranchBound.NS_depth_breadth"><code>EAGOBranchBound.NS_depth_breadth</code></a></li>
+<li><a href=".#EAGOBranchBound.UBDtime"><code>EAGOBranchBound.UBDtime</code></a></li>
+<li><a href=".#EAGOBranchBound.getfeasibility"><code>EAGOBranchBound.getfeasibility</code></a></li>
+<li><a href=".#EAGOBranchBound.getobjbound"><code>EAGOBranchBound.getobjbound</code></a></li>
+<li><a href=".#EAGOBranchBound.getobjval"><code>EAGOBranchBound.getobjval</code></a></li>
+<li><a href=".#EAGOBranchBound.getsolution"><code>EAGOBranchBound.getsolution</code></a></li>
+<li><a href=".#EAGOBranchBound.set_Bisect_Func!"><code>EAGOBranchBound.set_Bisect_Func!</code></a></li>
+<li><a href=".#EAGOBranchBound.set_Branch_Scheme!"><code>EAGOBranchBound.set_Branch_Scheme!</code></a></li>
+<li><a href=".#EAGOBranchBound.set_Verbosity!"><code>EAGOBranchBound.set_Verbosity!</code></a></li>
+<li><a href=".#EAGOBranchBound.set_to_default!"><code>EAGOBranchBound.set_to_default!</code></a></li>
+<li><a href=".#EAGOBranchBound.solveBnB!"><code>EAGOBranchBound.solveBnB!</code></a></li>
+</ul>
 <p><a id='User-Documentation-1'></a></p>
 <h2 id="user-documentation">User Documentation</h2>
-<p>```@contents Pages = [     userdocs/page1.md;     userdocs/page2.md     ] Depth = 2 '''</p>
               
             </div>
           </div>
@@ -194,5 +353,5 @@
 
 <!--
 MkDocs version : 0.17.2
-Build Date UTC : 2018-03-07 13:18:33
+Build Date UTC : 2018-03-07 14:00:37
 -->
