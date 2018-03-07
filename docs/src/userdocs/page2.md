@@ -1,5 +1,1 @@
-# Solution Routine
-
-```@docs
-EAGOBranchBound.solve
-```
+# Solution

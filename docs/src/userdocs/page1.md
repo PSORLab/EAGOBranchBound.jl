@@ -1,6 +1,5 @@
-# BnBSolver and BnBModel Types
+# Types
 
-```@docs
-EAGOBranchBound.BnBModel
-EAGOBranchBound.BnBSolver
-```
+Stuff
+
+## Subtitle
