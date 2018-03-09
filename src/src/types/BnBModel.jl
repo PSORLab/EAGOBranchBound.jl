@@ -16,6 +16,8 @@ Stores attributes of stack used to solve BnB problem. Has the following fields:
 * `UBDg_hist::Vector{Float64}`:                 Value history UBD problem
 * `LBDgtime::Vector{Float64}`:                  Run time history LBD problem
 * `UBDgtime::Vector{Float64}`:                  Run time history UBD problem
+* `Pretime::Vector{Float64}`:                   Run time history preprocessing
+* `Posttime::Vector{Float64}`:                  Run time history postprocessing
 * `max_id::Int64`:                              Max node used
 * `pstar::Vector{Interval{Float64}}`:           IntervalBox with solution
 * `soln::Vector{Float64}`:                      Storage for solution
@@ -41,6 +43,8 @@ type BnBModel
   UBDg_hist::Vector{Float64} # Value history UBD problem
   LBDgtime::Vector{Float64} # Run time history LBD problem
   UBDgtime::Vector{Float64} # Run time history UBD problem
+  Pretime::Vector{Float64} # Run time history LBD problem
+  Posttime::Vector{Float64} # Run time history UBD problem
   max_id::Int64             # Max node used
   pstar::Vector{Interval{Float64}}
   soln::Vector{Float64}
@@ -71,6 +75,8 @@ BnBModel(X::Vector{Interval{Float64}}) = BnBModel(deepcopy(X),
                                                               [Inf],
                                                               [0.0],
                                                               [0.0],
+                                                              [0.0],
+                                                              [0,0],
                                                               1,
                                                               deepcopy(X),
                                                               [0.0],

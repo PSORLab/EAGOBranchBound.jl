@@ -29,8 +29,8 @@ type BnBSolver
   Lower_Prob::Any    # Stores lower problem function
   Upper_Prob::Any    # Stores upper problem function
   Preprocess::Any    # Preprocessing function
-  Intprocess::Any    # Intermediate processing function
   Postprocess::Any   # Post processing function
+  Repeat_Chk::Any
   Term_Check::Any    # Stores termination check function
   Branch_Sto::Any    # Stores branching function
   Node_Select::Any   # Stores node selection function
@@ -63,6 +63,7 @@ BnBSolver() =  BnBSolver([],
                          [],
                          default_pre,
                          default_post,
+                         Repeat_Node_Default,
                          Term_Check,
                          BM_depth_best!,
                          NS_best,

@@ -18,8 +18,10 @@ function print_sol!(x::BnBSolver,y::BnBModel,
         println("    X[$i] = $temp")
       end
     end
-    println("Total UBD problems solved = $ubdcnt in $ubdtime seconds.")
     println("Total LBD problems solved = $lbdcnt in $lbdtime seconds.")
+    println("Total UBD problems solved = $ubdcnt in $ubdtime seconds.")
+    println("Total time spent preprocessing =  $(y.Pretime[end]) seconds.")
+    println("Total time spent postprocessing = $(y.Posttime[end]) seconds.")
   end
 end
 

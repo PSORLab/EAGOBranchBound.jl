@@ -1,3 +1,5 @@
+workspace()
+
 using IntervalArithmetic
 using EAGOBranchBound
 

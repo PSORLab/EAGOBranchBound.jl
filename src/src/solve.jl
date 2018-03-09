@@ -26,14 +26,17 @@ function solveBnB!(x::BnBSolver,y::BnBModel)
     feas_Pre::Bool = true
     feas_Post::Bool = true
     if (k_int == 0)
-      feas_Pret,nsBoxt = x.Preprocess(feas_Pre,nsBox,k_int,pos,x.opt)
-      LBD_valt,LBD_solt,LBD_feast,temp_objtL = x.Lower_Prob(nsBox,k_int,pos,x.opt)
-      UBD_valt,UBD_solt,UBD_feast,temp_objtU = x.Upper_Prob(nsBox,k_int,pos,x.opt)
-      feas_Postt::Bool,nsBoxt = x.Postprocess(feas_Post,nsBox,k_int,pos,x.opt)
+      x.Preprocess(feas_Pre,nsBox,y.UBDg,k_int,pos,x.opt)
+      LBD_valt,LBD_solt,LBD_feast,temp_objtL = x.Lower_Prob(nsBox,k_int,pos,x.opt,y.UBDg)
+      UBD_valt,UBD_solt,UBD_feast,temp_objtU = x.Upper_Prob(nsBox,k_int,pos,x.opt,y.UBDg)
+      x.Postprocess(feas_Post,nsBox,k_int,pos,x.opt,
+                    temp_objtL,temp_objtU)
     end
 
     # performs prepocessing and times
-    feas_Pre,nsBox = x.Preprocess(feas_Pre,nsBox,y.UBDg,k_int,pos,x.opt)
+    tic()
+    x.Preprocess(feas_Pre,nsBox,y.UBDg,k_int,pos,x.opt)
+    push!(y.Pretime,y.Pretime[end]+toq())
 
     if (feas_Pre)
       # solves & times lower bounding problem
@@ -51,7 +54,7 @@ function solveBnB!(x::BnBSolver,y::BnBModel)
 
           # solves & times upper bounding problem
           tic()
-          UBD_val,UBD_sol,UBD_feas = x.Upper_Prob(nsBox,k_int,pos,x.opt,temp_obj)
+          UBD_val,UBD_sol,UBD_feas,temp_objU = x.Upper_Prob(nsBox,k_int,pos,x.opt,y.UBDg)
           push!(y.UBDgtime,y.UBDgtime[end]+toq())
           y.ubcnt += 1
           print_results!(x,UBD_val,UBD_sol,UBD_feas,false)
@@ -72,7 +75,9 @@ function solveBnB!(x::BnBSolver,y::BnBModel)
           end
 
           # performs post processing and times
-          feas_Post,nsBox_Post = x.Postprocess(feas_Post,nsBox,int_info,y.UBDg,k_int,pos,x.opt)
+          tic()
+          feas_Post,nsBox_Post = x.Postprocess(feas_Post,nsBox,k_int,pos,x.opt,temp_objL,temp_objU)
+          push!(y.Posttime,y.Posttime[end]+toq())
 
           # branch if criteria met
           if (feas_Post)
