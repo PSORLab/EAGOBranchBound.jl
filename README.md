@@ -1,10 +1,10 @@
 # EAGOBranchBound
 
-[![Build Status](https://travis-ci.org/mewilhel/EAGOBranchBound.jl.svg?branch=master)](https://travis-ci.org/mewilhel/EAGOBranchBound.jl)
+[![Build Status](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl.svg?branch=master)](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl)
 
-[![Coverage Status](https://coveralls.io/repos/mewilhel/EAGOBranchBound.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/mewilhel/EAGOBranchBound.jl?branch=master)
+[![Coverage Status](https://coveralls.io/repos/MatthewStuber/EAGOBranchBound.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/MatthewStuber/EAGOBranchBound.jl?branch=master)
 
-[![codecov.io](http://codecov.io/github/mewilhel/EAGOBranchBound.jl/coverage.svg?branch=master)](http://codecov.io/github/mewilhel/EAGOBranchBound.jl?branch=master)
+[![codecov.io](http://codecov.io/github/MatthewStuber/EAGOBranchBound.jl/coverage.svg?branch=master)](http://codecov.io/github/MatthewStuber/EAGOBranchBound.jl?branch=master)
 
 # BranchBound
 A branch-and-bound library for Julia
