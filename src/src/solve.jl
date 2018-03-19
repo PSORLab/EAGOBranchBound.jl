@@ -42,6 +42,8 @@ function solveBnB!(x::BnBSolver,y::BnBModel)
     tic()
     feas_Pre,nsBox = x.Preprocess(feas_Pre,nsBox,y.UBDg,k_int,pos,x.opt)
     push!(y.Pretime,y.Pretime[end]+toq())
+
+    UBD_feas = false
     if (feas_Pre)
       # solves & times lower bounding problem
       tic()
@@ -65,6 +67,11 @@ function solveBnB!(x::BnBSolver,y::BnBModel)
 
           # fathoms by value dominance
           if (UBD_feas)
+            # update to handle equality constraints
+            if (y.lastgap>(UBD_val-LBD_val) && (UBD_val - y.UBDg < x.BnB_atol/10.0))
+              y.lastgap = UBD_val-LBD_val
+              y.soln = UBD_sol
+            end
             if (UBD_val < y.UBDg)
               y.feas_fnd = true
               y.first_num = y.lbcnt

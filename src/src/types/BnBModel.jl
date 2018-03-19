@@ -54,6 +54,7 @@ type BnBModel
   first_num::Int64
   lbcnt::Int64
   ubcnt::Int64
+  lastgap::Float64
 end
 
 """
@@ -85,5 +86,6 @@ BnBModel(X::Vector{Interval{Float64}}) = BnBModel(deepcopy(X),
                                                               false,
                                                               -1,
                                                               0,
-                                                              0)
+                                                              0,
+                                                              Inf)
 BnBModel() = BnBModel([Interval(0,1)])
