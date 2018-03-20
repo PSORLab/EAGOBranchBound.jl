@@ -9,7 +9,7 @@ X = [Interval(1,5)]
 model = BnBModel(X)
 solver = BnBSolver()
 set_to_default!(solver)
-solver.Verbosity = "Full"
+solver.Verbosity = "Normal"
 solver.opt = [x -> x[1]^2]
 solver.Lower_Prob = (X,k,p,opt,temp) -> [opt[1](X).lo,mid.(X),true,X,[]]
 solver.Upper_Prob = (X,k,p,opt,temp) -> [opt[1](X).hi,mid.(X),true,X,[]]

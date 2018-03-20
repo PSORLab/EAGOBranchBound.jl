@@ -28,7 +28,7 @@ Stores attributes of stack used to solve BnB problem. Has the following fields:
 * `lbcnt::Int64`:                               number of lower bounding problems solved
 * `ubcnt::Int64`:                               number of upper bounding problems solved
 """
-type BnBModel
+mutable struct BnBModel
   Init_Box::Vector{Interval{Float64}}
   box::Vector{Vector{Interval{Float64}}} # interval box stack
   Init_Integer::Vector{Vector{Int64}}

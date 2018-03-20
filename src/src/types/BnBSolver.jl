@@ -25,7 +25,7 @@ Stores solver specific functions used to solve BnB problem. Has the following fi
 * `exhaust::Bool`:          exhaustive search? (default = false)
 * `target_upper::Float64`:  required upper bound (default = -Inf)
 """
-type BnBSolver
+mutable struct BnBSolver
   Lower_Prob::Any    # Stores lower problem function
   Upper_Prob::Any    # Stores upper problem function
   Preprocess::Any    # Preprocessing function

@@ -2,7 +2,7 @@
 module EAGOBranchBound
 
 using IntervalArithmetic: Interval, diam
-using IntervalRootFinding.bisect
+using IntervalRootFinding: bisect
 
 export BnBSolver, BnBModel, set_Branch_Scheme!, set_Bisect_Func!,
        set_Verbosity!, set_to_default!, solveBnB!, getsolution, getobjval,
