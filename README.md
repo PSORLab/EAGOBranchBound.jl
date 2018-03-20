@@ -1,4 +1,5 @@
-# EAGOBranchBound
+# EAGOBranchBound.jl
+A branch-and-bound library for Julia
 
 [![Build Status](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl.svg?branch=master)](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl)
 [![Coverage Status](https://coveralls.io/repos/MatthewStuber/EAGOBranchBound.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/MatthewStuber/EAGOBranchBound.jl?branch=master)
@@ -6,9 +7,6 @@
 
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://MatthewStuber.github.io/EAGO.jl/stable)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://MatthewStuber.github.io/EAGO.jl/latest)
-
-# BranchBound
-A branch-and-bound library for Julia
 
 ## Authors
 - [Matthew Wilhelm](httppsor.uconn.eduour-team), Department of Chemical and Biomolecular Engineering,  University of Connecticut (UCONN)
