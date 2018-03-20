@@ -15,7 +15,7 @@ println("Testing Nodes...")
 t = @elapsed include("Node_Test.jl")
 println("done (took $t seconds).")
 
-println("Testing Types...")
+println("Testing Bisection...")
 t = @elapsed include("Bisect_Tests.jl")
 println("done (took $t seconds).")
 
