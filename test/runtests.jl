@@ -19,12 +19,10 @@ println("Testing Bisection...")
 t = @elapsed include("Bisect_Tests.jl")
 println("done (took $t seconds).")
 
-#=
-println("Testing Types...")
+println("Testing Branch...")
 t = @elapsed include("Branch_Test.jl")
 println("done (took $t seconds).")
 
-println("Testing Types...")
+println("Testing Access...")
 t = @elapsed include("Access_Tests.jl")
 println("done (took $t seconds).")
-=#
