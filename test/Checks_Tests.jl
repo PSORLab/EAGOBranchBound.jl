@@ -16,8 +16,10 @@ B.first_num = 0
 @test EAGOBranchBound.Term_Check(S,B,10) == false
 
 S.max_nodes = -1
+B.LBD = Float64[1.0]
 @test EAGOBranchBound.Term_Check(S,B,10) == false
 
+S.max_nodes = 100
 S.iter_lim = true
 S.max_iter = 5
 @test EAGOBranchBound.Term_Check(S,B,10) == false
