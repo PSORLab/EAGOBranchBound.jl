@@ -62,11 +62,11 @@ Next, the lower and upper bounding problems are defined. These problems must ret
 ```julia
 function ex_LBP(X,k,pos,opt,temp)
   ex_LBP_int = @interval X[1]+X[2]^2
-  return ex_LBP_int.lo, mid.(X), true, X,[]
+  return ex_LBP_int.lo, mid.(X), true, []
 end
 function ex_UBP(X,k,pos,opt,temp)
   ex_UBP_int = @interval X[1]+X[2]^2
-  return ex_UBP_int.hi, mid.(X), true, X,[]
+  return ex_UBP_int.hi, mid.(X), true, []
 end
 
 c.Lower_Prob = ex_LBP
@@ -107,9 +107,9 @@ julia> EAGOBranchBound.set_Verbosity!(a,"None")
 The majority of deterministic global optimization techniques use a branch-and-bound framework (or the closely related branch-and-reduce framework). Branch-and-bound search algorithms operate by partitioning a compact parameter space into a series of non-overlapping spaces (termed nodes). Upper and lower bounds of the function on a node are estimated, then compared with a global upper and lower bound. Any node that is found with an lower bound below the global upper bound is discarded (fathomed).
 
 ## References
-
-## Acknowledgements
+- Floudas, Christodoulos A. Deterministic global optimization: theory, methods and applications. Vol. 37. Springer Science & Business Media, 2013.
+- Horst, Reiner, and Hoang Tuy. Global optimization: Deterministic approaches. Springer Science & Business Media, 2013.
 
 ## Related Packages
-- ValidatedNumerics.jl, a Julia library for validated interval calculations, including basic interval extensions, constraint programming, and interval contactors
-- IntervalOptimisation.jl, implements a branch-and-bound type global optimization routine using validated interval arithmetic
+- [ValidatedNumerics.jl](https://github.com/JuliaIntervals/ValidatedNumerics.jl), a Julia library for validated interval calculations, including basic interval extensions, constraint programming, and interval contactors
+- [IntervalOptimisation.jl](https://github.com/JuliaIntervals/IntervalOptimisation.jl), implements a branch-and-bound type global optimization routine using validated interval arithmetic
