@@ -35,17 +35,21 @@ c2 = getobjval(model3)
 @test c2 == Inf
 
 solver.Lower_Prob = (X,k,p,opt,temp) -> [opt[1](X).lo,mid.(X),true,[]]
+solver.Upper_Prob = (X,k,p,opt,temp) -> [opt[1](X).hi,mid.(X),true,[]]
+function test_check(S,M,X1,X2)
+    return (M.lbcnt == 2)
+end
+solver.Repeat_Chk = test_check
+model5 = BnBModel(X)
+solveBnB!(solver,model5)
+c5 = getobjval(model5)
+@test c5 == 1.5625
+
+solver.Preprocess =  (feas_Pre,nsBox,UBDg,k_int,pos,opt) -> (false,nsBox)
+solver.Lower_Prob = (X,k,p,opt,temp) -> [opt[1](X).lo,mid.(X),true,[]]
 solver.Upper_Prob = (X,k,p,opt,temp) -> [((k==2) ? opt[1](X).hi : Inf),mid.(X),false,[]]
 model4 = BnBModel(X)
 solveBnB!(solver,model4)
 c3 = getobjval(model4)
 @test c3 == Inf
-
-solver.Lower_Prob = (X,k,p,opt,temp) -> [opt[1](X).lo,mid.(X),true,[]]
-solver.Upper_Prob = (X,k,p,opt,temp) -> [opt[1](X).hi,mid.(X),true,[]]
-solver.Repeat_Chk = (S,M,X1,X2) -> (M.lbcnt == 3)
-model5 = BnBModel(X)
-solveBnB!(solver,model5)
-c5 = getobjval(model5)
-@test c5 == 1.265625
 end
