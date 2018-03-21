@@ -26,4 +26,12 @@ set_Bisect_Func!(x,"absolute midpoint",-1)
 set_Verbosity!(x,"Normal")
 @test x.Verbosity == "Normal"
 
+@test_throws ErrorException set_Branch_Scheme!(x,"random")
+@test_throws ErrorException  set_Verbosity!(x,"random")
+@test_throws ErrorException  set_Bisect_Func!(x,"random",-1)
+@test_throws ErrorException  set_Bisect_Func!(x,"random",1)
+
+@test_nowarn set_Bisect_Func!(x,"relative midpoint",3)
+@test_nowarn set_Bisect_Func!(x,"absolute midpoint",3)
+
 end
