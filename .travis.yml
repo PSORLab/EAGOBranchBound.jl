@@ -2,9 +2,10 @@
 language: julia
 os:
   - linux
-  - osx
+  - osx    #build never started in travis CI, will trouble shoot later
 julia:
-  - 0.6
+  - 0.6 # will add nightly later
+  - nightly
 notifications:
   email: false
 git:
@@ -12,10 +13,12 @@ git:
 
 ## uncomment the following lines to allow failures on nightly julia
 ## (tests will run but not make your overall status red)
-#matrix:
-#  allow_failures:
-#  - julia: nightly
-
+matrix:
+  allow_failures:
+  - osx: v0.6
+  - osx: nightly
+  - julia: nightly
+  
 ## uncomment and modify the following lines to manually install system packages
 #addons:
 #  apt: # apt-get for linux

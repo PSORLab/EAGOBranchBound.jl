@@ -28,9 +28,9 @@ Stores attributes of stack used to solve BnB problem. Has the following fields:
 * `lbcnt::Int64`:                               number of lower bounding problems solved
 * `ubcnt::Int64`:                               number of upper bounding problems solved
 """
-mutable struct BnBModel
-  Init_Box::Vector{Interval{Float64}}
-  box::Vector{Vector{Interval{Float64}}} # interval box stack
+mutable struct BnBModel{V}
+  Init_Box::Vector{V}
+  box::Vector{Vector{V}} # interval box stack
   Init_Integer::Vector{Vector{Int64}}
   integers::Vector{Vector{Vector{Int64}}}
   LBD::Vector{Float64} # lower bounds associated with each stack
@@ -46,7 +46,7 @@ mutable struct BnBModel
   Pretime::Vector{Float64} # Run time history LBD problem
   Posttime::Vector{Float64} # Run time history UBD problem
   max_id::Int64             # Max node used
-  pstar::Vector{Interval{Float64}}
+  pstar::Vector{V}
   soln::Vector{Float64}
   soln_val::Float64
   first_fnd::Bool
@@ -62,30 +62,30 @@ end
 
 Initializes a `BnBModel` with `.Init_Box` = `X` and `.box` = `[X]`.
 """
-BnBModel(X::Vector{Interval{Float64}}) = BnBModel(deepcopy(X),
-                                                              [deepcopy(X)],
-                                                              [[1]],
-                                                              [[[1]]],
-                                                              [-Inf],
-                                                              [Inf],
-                                                              [1],
-                                                              [1],
-                                                              -Inf,
-                                                              Inf,
-                                                              [-Inf],
-                                                              [Inf],
-                                                              [0.0],
-                                                              [0.0],
-                                                              [0.0],
-                                                              [0,0],
-                                                              1,
-                                                              deepcopy(X),
-                                                              [0.0],
-                                                              Inf,
-                                                              false,
-                                                              false,
-                                                              -1,
-                                                              0,
-                                                              0,
-                                                              Inf)
-BnBModel() = BnBModel([Interval(0,1)])
+BnBModel(X::Vector{V}) where {V} = BnBModel{V}(deepcopy(X),
+                                            [deepcopy(X)],
+                                            [[1]],
+                                            [[[1]]],
+                                            [-Inf],
+                                            [Inf],
+                                            [1],
+                                            [1],
+                                            -Inf,
+                                            Inf,
+                                            [-Inf],
+                                            [Inf],
+                                            [0.0],
+                                            [0.0],
+                                            [0.0],
+                                            [0,0],
+                                            1,
+                                            deepcopy(X),
+                                            [0.0],
+                                            Inf,
+                                            false,
+                                            false,
+                                            -1,
+                                            0,
+                                            0,
+                                            Inf)
+#BnBModel() = BnBModel{MCInterval{Float64}}([MCInterval(0.0,1.0)])

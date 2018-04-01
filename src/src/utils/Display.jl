@@ -31,7 +31,14 @@ end
 Prints node information for the B&B problem. Node id, bound, and interval box.
 """
 function print_node!(x::BnBSolver,id::Int64,lbd::Float64,
-                            box::Vector{Interval{Float64}})
+                            box::Vector{Interval{V}}) where {V<:AbstractFloat}
+  if (x.Verbosity == "Full")
+    println("Node ID: $(id), Lower Bound: $(lbd), IntervalBox: $(box)")
+  end
+end
+
+function print_node!(x::BnBSolver,id::Int64,lbd::Float64,
+                            box::Vector{MCInterval{V}}) where {V<:AbstractFloat}
   if (x.Verbosity == "Full")
     println("Node ID: $(id), Lower Bound: $(lbd), IntervalBox: $(box)")
   end
@@ -55,7 +62,7 @@ function print_int!(B::BnBSolver,k_int::Int64,k_nod::Int64,
     sbool1 = feasL ? "true" : "false"
     sbool2 = feasU ? "true" : "false"
     if ((mod(k_int,B.itr_intv)==0))
-      ptr_arr_temp = [k_int nid lbdp lbd ubd k_nod (ubd-lbd) (ubd-lbd)/abs(lbd) sbool1 sbool2]
+      ptr_arr_temp = [k_int nid lbdp lbd ubd k_nod abs(ubd-lbd) abs(ubd-lbd)/(min(abs(lbd),abs(ubd))) sbool1 sbool2]
       ptr_arr1 = join([@sprintf("%6u",x) for x in ptr_arr_temp[1:2]], ",   ")
       ptr_arr2 = join([@sprintf("%3.7f",x) for x in ptr_arr_temp[3:5]], ",     ")
       ptr_arr3 = join([@sprintf("%6u",x) for x in ptr_arr_temp[6:6]], ",")

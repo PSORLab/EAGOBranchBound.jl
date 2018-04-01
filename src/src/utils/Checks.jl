@@ -50,7 +50,7 @@ Checks that:
 Outputs a description of termination check if it returns false.
 """
 function Conv_Check(x::BnBSolver,ubd::Float64,lbd::Float64)
-  return (((ubd-lbd) <= x.BnB_atol) || ((ubd-lbd) <= abs(lbd)*x.BnB_rtol))
+  return ((abs(ubd-lbd) <= x.BnB_atol) || (abs(ubd-lbd)/(min(abs(lbd),abs(ubd))) <= x.BnB_rtol))
 end
 
 """
@@ -59,8 +59,14 @@ end
 
 Default check for repeating a node. Always returns false.
 """
-function Repeat_Node_Default(x::BnBSolver,y::BnBModel,
-                             Xin::Vector{Interval{Float64}},
-                             Xout::Vector{Interval{Float64}})
+function Repeat_Node_Default(x::BnBSolver,y::BnBModel{Interval{T}},
+                             Xin::Vector{Interval{T}},
+                             Xout::Vector{Interval{T}}) where {T<:AbstractFloat}
+  return false
+end
+
+function Repeat_Node_Default(x::BnBSolver,y::BnBModel{MCInterval{T}},
+                             Xin::Vector{MCInterval{T}},
+                             Xout::Vector{MCInterval{T}}) where {T<:AbstractFloat}
   return false
 end

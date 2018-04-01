@@ -36,9 +36,9 @@ function set_Bisect_Func!(x::BnBSolver,BF::String,nx::Int64)
     end
   else
     if (BF == "relative midpoint")
-      x.Bisect_Func = (S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}}) -> Bisect_Rel_Imp(S,B,N,nx)
+      x.Bisect_Func = (S::BnBSolver,B::BnBModel,N) -> Bisect_Rel_Imp(S,B,N,nx)
     elseif (BF == "absolute midpoint")
-      x.Bisect_Func = (S::BnBSolver,B::BnBModel,N::Vector{Interval{Float64}}) -> Bisect_Abs_Imp(S,B,N,nx)
+      x.Bisect_Func = (S::BnBSolver,B::BnBModel,N) -> Bisect_Abs_Imp(S,B,N,nx)
     else
       error("Invalid bisection method")
     end
