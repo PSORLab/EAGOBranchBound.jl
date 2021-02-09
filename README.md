@@ -1,5 +1,5 @@
-# EAGOBranchBound.jl
-A branch-and-bound library for Julia
+# EAGOBranchBound.jl [DEPRECATED]
+A branch-and-bound library for Julia: This package is no longer supported, use EAGO.jl instead.
 
 [![Build Status](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl.svg?branch=master)](https://travis-ci.org/MatthewStuber/EAGOBranchBound.jl)
 [![Coverage Status](https://coveralls.io/repos/github/MatthewStuber/EAGOBranchBound.jl/badge.svg?branch=master)](https://coveralls.io/github/MatthewStuber/EAGOBranchBound.jl?branch=master)
